@@ -59,16 +59,16 @@ abstract contract IssuerHelper is OwnerHelper {
 
 contract GyreDID is IssuerHelper {
     uint256 private issueCount;  // number of all issued credentials 
-    uint8 private holderCount; typeCount // number of holders  // alumniCount;
+    uint8 private typeCount; // number of existing types  // alumniCount;
     mapping(uint8 => string) private issueTypeEnum;
-    mapping(uint8 => string) private statusEnum;
+    mapping(uint8 => string) private statusEnum;  // no usecase for now
 
     struct Credential{
         uint256 id;
         address issuer;
         uint8 issueType;
         uint8 status;
-        string hash;
+        string iPFS_hash;
         uint256 createDate;
     }
 
@@ -76,23 +76,22 @@ contract GyreDID is IssuerHelper {
                                                                           //  address => uint8 count => credential
     constructor() {
         issueCount = 3;
-        holderCount = 2;
-        issueTypeEnum[0] = "Employee";
-        issueTypeEnum[1] = "Student";
-        issueTypeEnum[2] = "Member";
+        typeCount = 2;
+        issueTypeEnum[0] = "BD";
+        issueTypeEnum[1] = "D";
+        issueTypeEnum[2] = "R";
     }
 
     function createCredential(address _holderAddress, uint8 _issueType, string calldata _value) onlyIssuer public returns(bool){
-        // creates a new credential
-        uint8 _holderCredentialsCount = credentials[_holderAddress].length;  
-        Credential storage credential = credentials[_holderAddress][_holderCredentialsCount];  
+        // creates a new credential  
+        Credential storage credential = credentials[_holderAddress][_issueType];  
         // Problem: bad issuer can issue multiple same certificates, but he pays gas
-        //require(credential.id == 0);  // check that credential doesn't exist
+        require(credential.id == 0);  // check that credential doesn't exist
         credential.id = issueCount;
         credential.issuer = msg.sender;
         credential.issueType = _issueType;
-        credential.statusType = 0;
-        credential.value = _value;
+        credential.status = 0;
+        credential.iPFS_hash = _value;
         credential.createDate = block.timestamp;
 
         issueCount += 1;
@@ -105,24 +104,25 @@ contract GyreDID is IssuerHelper {
     }
 
     function getCredentials(address _holderAddress) public view returns (Credential[] memory){
-        Credential[] memory holderCredentials;  
-        uint8 i = 0;
-        while(credentials[_holderAddress][i].id != 0) {
-                holderCredentials.push(credentials[_holderAddress][i]);
-                i++;
+        Credential[] memory holderCredentials = new Credential[](typeCount);
+        uint8 idx = 0;
+        for(uint8 i = 0 ; i < typeCount ; i++){
+            if(credentials[_holderAddress][i].id != 0){
+                holderCredentials[idx] = credentials[_holderAddress][i];
+                idx+=1;
             }
         }
         return holderCredentials;
     }
 
     function addIssueType(string calldata _newType) onlyIssuer public returns (bool) {
-        issueEnum[holderCount] = _newType;  //alumniEnum
-        holderCount+= 1; //alumniCount += 1;
+        issueTypeEnum[typeCount] = _newType;  //alumniEnum
+        typeCount+= 1; //alumniCount += 1;
         return true;
     }
 
     function getIssueType(uint8 _type) public view returns (string memory) {
-        return issueEnum[_type];
+        return issueTypeEnum[_type];
     }
 
     function addStatusType(uint8 _type, string calldata _value) onlyIssuer public returns (bool){
@@ -138,7 +138,7 @@ contract GyreDID is IssuerHelper {
     function changeStatus(address _holder, uint8 _issueType, uint8 _type) onlyIssuer public returns (bool) {
         require(credentials[_holder][_issueType].id != 0);
         require(bytes(statusEnum[_type]).length != 0);
-        credentials[_holder][_issueType].statusType = _type;
+        credentials[_holder][_issueType].status = _type;
         return true;
     }
 
