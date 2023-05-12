@@ -6,7 +6,7 @@
             "id": "@id",
             "type": "@type",
             "EmployeeConfirmation": {
-            "@id": "https://github.com/Cosmodude/Gyre_DID/blob/main/EmployeeSchema.jsonld#EmployeeConfirmation",
+            "@id": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.jsonld#EmployeeConfirmation",
             "@context": {
                 "@version": 1.1,
                 "@protected": true,
@@ -17,10 +17,6 @@
                 "issueDate": {
                 "@id": "vocab:issueDate",
                 "@type": "xsd:dateTime"
-                },
-                "issuer":{
-                    "@id": "vocab:issuer",
-                    "@type": "xsd:string"
                 },
                 "organization":{
                     "@id": "vocab:organization",

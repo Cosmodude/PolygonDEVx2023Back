@@ -3,8 +3,8 @@
     "type": "object",
     "$metadata": {
       "uris": {
-        "jsonLdContext": "https://github.com/Cosmodude/Gyre_DID/blob/main/EmployeeSchema.jsonld",
-        "jsonSchema": "https://github.com/Cosmodude/Gyre_DID/blob/main/EmployeeSchema.json"
+        "jsonLdContext": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.jsonld",
+        "jsonSchema": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.json"
       }
     },
     "required": [
@@ -106,7 +106,6 @@
             "type": "object",
             "required": [
               "id",
-              "issuer",
               "organization",
               "position",
               "GyreId"
@@ -116,9 +115,6 @@
                 "title": "Credential Subject ID",
                 "type": "string",
                 "format": "uri"
-              },
-              "issuer": {
-                "type": "string"
               },
               "organization":{
                 "type": "string"
