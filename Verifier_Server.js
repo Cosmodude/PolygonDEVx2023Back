@@ -1,8 +1,7 @@
 const express = require('express'); 
 const { auth, resolver, loaders } = require('@iden3/js-iden3-auth');
 const getRawBody = require('raw-body');
-import { GetAuthRequest, Callback } from './Verifier_functions.js';
-
+const { GetAuthRequest, Callback } = require ('./Verifier_functions.js');
 
 const app = express();
 const port = 8080;
