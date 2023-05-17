@@ -30,7 +30,7 @@ async function GetAuthRequest(req,res) {
         query: {
           allowedIssuers: ['*'],
           type: 'EmployeeConfirmation',
-          context: 'https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.jsonld#EmployeeConfirmation',
+          context: 'https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/schema/EmployeeSchema.jsonld#EmployeeConfirmation',
           credentialSubject: {
             organization: {
               $eq: org,

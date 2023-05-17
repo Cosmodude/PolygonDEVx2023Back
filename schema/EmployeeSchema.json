@@ -3,8 +3,8 @@
     "type": "object",
     "$metadata": {
       "uris": {
-        "jsonLdContext": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.jsonld",
-        "jsonSchema": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/EmployeeSchema.json"
+        "jsonLdContext": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/schema/EmployeeSchema.jsonld",
+        "jsonSchema": "https://raw.githubusercontent.com/Cosmodude/Gyre_DID/main/schema/EmployeeSchema.json"
       }
     },
     "required": [
