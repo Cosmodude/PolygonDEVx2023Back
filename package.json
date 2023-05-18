@@ -1,4 +1,5 @@
-{
+{ 
+  "type": "module",
   "dependencies": {
     "@iden3/js-iden3-auth": "^1.0.0-beta.7",
     "@multiformats/multiaddr": "^12.1.3",
