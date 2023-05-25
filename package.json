@@ -1,1 +1,1 @@
-{"type":"module","dependencies":{"@0xpolygonid/js-sdk":"^1.0.0-beta.9","@iden3/js-iden3-auth":"^1.0.0-beta.7","@multiformats/multiaddr":"^12.1.3","express":"^4.18.2"}}
+{"type":"module","dependencies":{"@0xpolygonid/js-sdk":"^1.0.0-beta.9","@iden3/js-iden3-auth":"^1.0.0-beta.7","@multiformats/multiaddr":"^12.1.3","dotenv":"^16.0.3","express":"^4.18.2"}}
