@@ -8,8 +8,8 @@ const defaultLink = "https://docs.infura.io/infura/";
 
 // Create Auth object
 const auth = new Auth({
-    projectId: process.env.INFURA_PROJECT_ID,
-    secretId: process.env.INFURA_PROJECT_SECRET,
+    projectId: process.env.INFURA_API_KEY,
+    secretId: process.env.INFURA_API_KEY_SECRET,
     privateKey: process.env.WALLET_PRIVATE_KEY,
     rpcUrl: process.env.EVM_RPC_URL,
     chainId: 5, // Goerli
@@ -46,7 +46,7 @@ async function Store_Metadata(name: string, image = defaultImage, link =defaultL
 // STORES ARRAY of medata on IPFS
 async function storeFolder(names: string[], imageLinks: string[], link = defaultLink) { 
     const storeArrayMetadata = await sdk.createFolder({  // fixed problems with arguments
-        metadata: [
+        metadata: [  // array - set of valid JSON metadata.
             Metadata.openSeaTokenLevelStandard({
                 description: "description",
                 external_url: link,
@@ -56,9 +56,20 @@ async function storeFolder(names: string[], imageLinks: string[], link = default
                 name: names[0],
                 attributes: [],
             }),
+            Metadata.openSeaTokenLevelStandard({
+                description: "description",
+                external_url: link,
+                image: await sdk.storeFile(
+                    { metadata: imageLinks[1] }
+                ),
+                name: names[1],
+                attributes: [],
+            }),
         ],
         isErc1155: true,
     });
     console.log('storeArrayMetadata: ', storeArrayMetadata);
     return storeArrayMetadata;
 }
+
+storeFolder(["Vlad","bob"], ["https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png","https://storage.googleapis.com/opensea-prod.appspot.com/puffs/4.png"]);

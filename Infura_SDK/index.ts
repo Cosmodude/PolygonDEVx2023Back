@@ -22,8 +22,21 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
 
 (async() => {
     try {
-      await getCollectionsByWallet('0xacdaEEb57ff6886fC8e203B9Dd4C2b241DF89b7a');
+      await getCollectionsByWallet('0x6f9e2777D267FAe69b0C5A24a402D14DA1fBcaA1');
     } catch (error) {
       console.log(error);
    }
 })();
+
+
+const newContractERC1155 = await sdk.deploy({
+    template: TEMPLATES.ERC1155Mintable,
+    params: {
+      baseURI: 'ipfs://QmXv6qJjFfk3vXCktcqrD2M37jxSnQHeHqDjsZueamYbmj/', //URI (identifier) for Metadata Storage
+      contractURI: 'ipfs://Qmdtyqjx5ha9dBda6ZE5dc2N4vB8oAZYrLhGQj5jAah2RF/1.json', // collectionMetadata URI
+      ids: [0, 1],
+    },
+  });
+  
+console.log('Contract: ', newContractERC1155.contractAddress);
+  
