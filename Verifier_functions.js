@@ -8,8 +8,10 @@ const requestMap = new Map();
 
 export async function GetAuthRequest (req, res)  {
     // Audience is verifier id
+  
     const hostUrl = "https://66f8-222-112-225-79.ngrok-free.app";  // our frontend Url
-    const sessionId = 1;
+    const sessionId = 1; // check what is it 
+ 
     const callbackURL = "/api/callback"
     const audience = "did:polygonid:polygon:mumbai:2qDyy1kEo2AYcP3RT4XGea7BtxsY285szg6yP9SPrs"
 
