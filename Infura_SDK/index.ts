@@ -20,6 +20,7 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
       console.log('collections:', result);
 }
 
+/*
 (async() => {
     try {
       await getCollectionsByWallet('0x6f9e2777D267FAe69b0C5A24a402D14DA1fBcaA1');
@@ -27,7 +28,7 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
       console.log(error);
    }
 })();
-
+*/
 
 async function contractDeploy() {
   const newContractERC1155 = await sdk.deploy({
@@ -42,5 +43,19 @@ async function contractDeploy() {
   console.log('Contract: ', newContractERC1155.contractAddress);
   return newContractERC1155;
 }
+
+
+// to work with existing contract in separate environment 
+async function getContract(address: string) {
+  const existingContract = await sdk.loadContract({
+    template: TEMPLATES.ERC1155Mintable,
+    contractAddress: address,
+  });
+  console.log('contract: \n', existingContract);
+  return existingContract;
+}
+
+const deployed = await contractDeploy();
+getContract(deployed.contractAddress);
 
   
