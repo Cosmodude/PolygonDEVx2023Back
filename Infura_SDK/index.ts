@@ -29,14 +29,18 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
 })();
 
 
-const newContractERC1155 = await sdk.deploy({
+async function contractDeploy() {
+  const newContractERC1155 = await sdk.deploy({
     template: TEMPLATES.ERC1155Mintable,
     params: {
       baseURI: 'ipfs://QmXv6qJjFfk3vXCktcqrD2M37jxSnQHeHqDjsZueamYbmj/', //URI (identifier) for Metadata Storage
-      contractURI: 'ipfs://Qmdtyqjx5ha9dBda6ZE5dc2N4vB8oAZYrLhGQj5jAah2RF/1.json', // collectionMetadata URI
+      // Each token's URI = baseURI + tokenId
+      contractURI: 'ipfs://Qmdtyqjx5ha9dBda6ZE5dc2N4vB8oAZYrLhGQj5jAah2RF/1.json', // whole collectionMetadata URI
       ids: [0, 1],
     },
   });
-  
-console.log('Contract: ', newContractERC1155.contractAddress);
+  console.log('Contract: ', newContractERC1155.contractAddress);
+  return newContractERC1155;
+}
+
   
