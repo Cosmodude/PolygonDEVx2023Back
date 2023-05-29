@@ -8,7 +8,7 @@ const auth = new Auth({
     projectId: process.env.INFURA_API_KEY,
     secretId: process.env.INFURA_API_KEY_SECRET,
     privateKey: process.env.WALLET_PRIVATE_KEY,
-    chainId: 80001,
+    chainId: 80001,   // change network here
 });
 
 // Instantiate SDK
@@ -30,11 +30,11 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
 })();
 */
 
-async function contractDeploy() {
+async function deployContract() {
   const newContractERC1155 = await sdk.deploy({
     template: TEMPLATES.ERC1155Mintable,
     params: {
-      baseURI: 'ipfs://QmXv6qJjFfk3vXCktcqrD2M37jxSnQHeHqDjsZueamYbmj/', //URI (identifier) for Metadata Storage
+      baseURI: 'ipfs://Qmdtyqjx5ha9dBda6ZE5dc2N4vB8oAZYrLhGQj5jAah2RF/', //URI (identifier) for Metadata Storage
       // Each token's URI = baseURI + tokenId
       contractURI: 'ipfs://Qmdtyqjx5ha9dBda6ZE5dc2N4vB8oAZYrLhGQj5jAah2RF/1.json', // whole collectionMetadata URI
       ids: [0, 1],
@@ -55,7 +55,18 @@ async function getContract(address: string) {
   return existingContract;
 }
 
-const deployed = await contractDeploy();
+// Adds tokens to the contract 
+async function addTokens(address: string,ids: number[]) {
+  const existingContract = await sdk.loadContract({
+    template: TEMPLATES.ERC1155Mintable,
+    contractAddress: address,
+  });
+  const tx = await existingContract.addIds({
+    ids: ids,
+  });
+}
+
+const deployed = await deployContract();
 getContract(deployed.contractAddress);
 
   
