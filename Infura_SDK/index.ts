@@ -64,6 +64,7 @@ async function addTokens(address: string,ids: number[]) {
   const tx = await existingContract.addIds({
     ids: ids,
   });
+  return tx;
 }
 
 const deployed = await deployContract();
@@ -84,6 +85,7 @@ async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_
   
   const minted = await mint.wait();
   console.log(minted);
+  return minted;
 }
 
   
