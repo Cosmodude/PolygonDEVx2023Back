@@ -69,4 +69,21 @@ async function addTokens(address: string,ids: number[]) {
 const deployed = await deployContract();
 getContract(deployed.contractAddress);
 
+async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number) {
+  const existingContract = await sdk.loadContract({
+    template: TEMPLATES.ERC1155Mintable,
+    contractAddress: contractAddress,
+  });
+
+  const mint = await existingContract.mint({
+    to: to,
+    id: id,
+    quantity: amount,
+    gas: 5000,  // required for Polygon and Mumbai networks, optional for the other networks
+  });
+  
+  const minted = await mint.wait();
+  console.log(minted);
+}
+
   
