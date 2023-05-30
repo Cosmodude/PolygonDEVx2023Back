@@ -13,6 +13,8 @@ const auth = new Auth({
 
 // Instantiate SDK
 const sdk = new SDK(auth);
+
+// Get NFT collections
 const getCollectionsByWallet = async (walletAddress: string)=> {
     const result = await sdk.api.getCollectionsByWallet({
         walletAddress: walletAddress,
@@ -57,9 +59,6 @@ export async function addTokens(address: string,ids: number[], sdk: SDK) {
   return tx;
 }
 
-const deployed = await deployContract(sdk);
-getContract(deployed.contractAddress, sdk);
-
 export async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number, sdk: SDK) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
@@ -77,5 +76,8 @@ export async function mintTokens(contractAddress: string, to=process.env.WALLET_
   console.log(minted);
   return minted;
 }
+
+const deployed = await deployContract(sdk);
+getContract(deployed.contractAddress, sdk);
 
   
