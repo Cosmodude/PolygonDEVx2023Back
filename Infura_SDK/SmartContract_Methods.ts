@@ -77,6 +77,14 @@ export async function mintTokens(contractAddress: string, to=process.env.WALLET_
   return minted;
 }
 
+export async function setBaseURI(sdk: SDK, newURI: string) {
+  const baseURI = await sdk.setBaseURI({
+    baseURI: newURI,
+    gas: 5000,
+});
+console.log(baseURI);
+}
+
 const deployed = await deployContract(sdk);
 getContract(deployed.contractAddress, sdk);
 
