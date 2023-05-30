@@ -20,17 +20,7 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
       console.log('collections:', result);
 }
 
-/*
-(async() => {
-    try {
-      await getCollectionsByWallet('0x6f9e2777D267FAe69b0C5A24a402D14DA1fBcaA1');
-    } catch (error) {
-      console.log(error);
-   }
-})();
-*/
-
-async function deployContract() {
+export async function deployContract(sdk: SDK) {
   const newContractERC1155 = await sdk.deploy({
     template: TEMPLATES.ERC1155Mintable,
     params: {
@@ -46,7 +36,7 @@ async function deployContract() {
 
 
 // to work with existing contract in separate environment 
-async function getContract(address: string) {
+export async function getContract(address: string, sdk: SDK) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: address,
@@ -56,7 +46,7 @@ async function getContract(address: string) {
 }
 
 // Adds tokens to the contract 
-async function addTokens(address: string,ids: number[]) {
+export async function addTokens(address: string,ids: number[], sdk: SDK) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: address,
@@ -67,10 +57,10 @@ async function addTokens(address: string,ids: number[]) {
   return tx;
 }
 
-const deployed = await deployContract();
-getContract(deployed.contractAddress);
+const deployed = await deployContract(sdk);
+getContract(deployed.contractAddress, sdk);
 
-async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number) {
+export async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number, sdk: SDK) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: contractAddress,
