@@ -85,6 +85,19 @@ export async function setBaseURI(sdk: SDK, newURI: string) {
 console.log(baseURI);
 }
 
+export async function addAdmin(address: string, sdk: SDK, contractAddress: string) {
+  const existingContract = await sdk.loadContract({
+    template: TEMPLATES.ERC1155Mintable,
+    contractAddress: contractAddress,
+  });
+
+  const newAdmin = await existingContract.addAdmin({
+    publicAddress: address
+  });
+  console.log(newAdmin);
+  return newAdmin;
+}
+
 const deployed = await deployContract(sdk);
 getContract(deployed.contractAddress, sdk);
 
