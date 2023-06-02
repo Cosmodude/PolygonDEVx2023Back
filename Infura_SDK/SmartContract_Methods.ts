@@ -22,7 +22,9 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
       console.log('collections:', result);
 }
 
-export async function deployContract(sdk: SDK) {
+// Mikhail public address 0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054
+
+async function deployContract() {
   const newContractERC1155 = await sdk.deploy({
     template: TEMPLATES.ERC1155Mintable,
     params: {
@@ -38,20 +40,20 @@ export async function deployContract(sdk: SDK) {
 
 
 // to work with existing contract in separate environment 
-export async function getContract(address: string, sdk: SDK) {
+export async function getContract(contractAddress: string) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
-    contractAddress: address,
+    contractAddress: contractAddress,
   });
   console.log('contract: \n', existingContract);
   return existingContract;
 }
 
-// Adds tokens to the contract 
-export async function addTokens(address: string,ids: number[], sdk: SDK) {
+// Adds tokens (ids) to the contract 
+export async function addTokens(contractAddress: string, ids: number[]) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
-    contractAddress: address,
+    contractAddress: contractAddress,
   });
   const tx = await existingContract.addIds({
     ids: ids,
@@ -59,7 +61,7 @@ export async function addTokens(address: string,ids: number[], sdk: SDK) {
   return tx;
 }
 
-export async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number, sdk: SDK) {
+export async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: contractAddress,
@@ -77,28 +79,31 @@ export async function mintTokens(contractAddress: string, to=process.env.WALLET_
   return minted;
 }
 
-export async function setBaseURI(sdk: SDK, newURI: string) {
+/*
+export async function setBaseURI(newURI: string) {
   const baseURI = await sdk.setBaseURI({
     baseURI: newURI,
     gas: 5000,
 });
 console.log(baseURI);
 }
+*/
 
-export async function addAdmin(address: string, sdk: SDK, contractAddress: string) {
+export async function addAdmin(adminaddress: string, contractAddress: string) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: contractAddress,
   });
 
   const newAdmin = await existingContract.addAdmin({
-    publicAddress: address
+    publicAddress: adminaddress
   });
   console.log(newAdmin);
   return newAdmin;
 }
 
-const deployed = await deployContract(sdk);
-getContract(deployed.contractAddress, sdk);
+
+const deployed = await deployContract();
+getContract(deployed.contractAddress);
 
   
