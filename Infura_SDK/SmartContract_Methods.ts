@@ -22,7 +22,7 @@ const getCollectionsByWallet = async (walletAddress: string)=> {
       console.log('collections:', result);
 }
 
-// Mikhail public address 0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054
+
 
 async function deployContract() {
   const newContractERC1155 = await sdk.deploy({
@@ -103,7 +103,11 @@ export async function addAdmin(adminaddress: string, contractAddress: string) {
 }
 
 
-const deployed = await deployContract();
-getContract(deployed.contractAddress);
+// Latest contract address: 0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67
 
+// Mikhail public address 0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054
+
+//const deployed = await deployContract();
+//getContract(deployed.contractAddress);
+//console.log("tx: ",await addTokens(deployed.contractAddress, [1000]) )
   
