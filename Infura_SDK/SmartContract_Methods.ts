@@ -2,6 +2,7 @@
 import { config as loadEnv } from 'dotenv';
 import { SDK, Auth, TEMPLATES, Metadata } from '@infura/sdk';
 loadEnv();
+import { ethers, utils } from 'ethers';
 
 // Create Auth object
 const auth = new Auth({
@@ -62,6 +63,9 @@ export async function addTokens(contractAddress: string, ids: number[]) {
 }
 
 export async function mintTokens(contractAddress: string, to=process.env.WALLET_PUBLIC_ADDRESS, id: number, amount: number) {
+  if (!utils.isAddress(contractAddress)) {
+    console.log("Bad address!")
+  }
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: contractAddress,
@@ -89,25 +93,46 @@ console.log(baseURI);
 }
 */
 
-export async function addAdmin(adminaddress: string, contractAddress: string) {
+export async function addAdmin(adminAddress: string, contractAddress: string) {
   const existingContract = await sdk.loadContract({
     template: TEMPLATES.ERC1155Mintable,
     contractAddress: contractAddress,
   });
 
-  const newAdmin = await existingContract.addAdmin({
-    publicAddress: adminaddress
+  const newAdmin = await existingContract.accessControl.addAdmin({
+    publicAddress: adminAddress
   });
+  console.log("New admin added", adminAddress);
   console.log(newAdmin);
   return newAdmin;
 }
 
 
 // Latest contract address: 0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67
-
+const MikhailAddress = "0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67"
+const MyAddress = "0x6f9e2777D267FAe69b0C5A24a402D14DA1fBcaA1";
 // Mikhail public address 0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054
-
+const latestAddress = "0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67";
 //const deployed = await deployContract();
 //getContract(deployed.contractAddress);
+//console.log(!utils.isAddress(MyAddress));
+//mintTokens(latestAddress, MikhailAddress, 0, 1);
 //console.log("tx: ",await addTokens(deployed.contractAddress, [1000]) )
-  
+//await addAdmin(MikhailAddress, latestAddress);
+/*
+const existingContract = await sdk.loadContract({
+  template: TEMPLATES.ERC1155Mintable,
+  contractAddress: latestAddress,
+});
+const token = await existingContract.addIds({
+  ids: [1001],
+});
+console.log("Id added")
+const mint = await existingContract.mint({
+  to: MikhailAddress,
+  id: 1001,
+  quantity: 1,
+  gas: 5000,  // required for Polygon and Mumbai networks, optional for the other networks
+});
+console.log("Minted")
+*/
