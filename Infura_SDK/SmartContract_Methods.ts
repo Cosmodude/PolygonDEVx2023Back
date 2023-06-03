@@ -75,6 +75,7 @@ export async function mintTokens(contractAddress: string, to=process.env.WALLET_
     to: to,
     id: id,
     quantity: amount,
+    chainId: 80001,   
     gas: 5000,  // required for Polygon and Mumbai networks, optional for the other networks
   });
   
@@ -109,7 +110,7 @@ export async function addAdmin(adminAddress: string, contractAddress: string) {
 
 
 // Latest contract address: 0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67
-const MikhailAddress = "0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67"
+const MikhailAddress = "0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054"
 const MyAddress = "0x6f9e2777D267FAe69b0C5A24a402D14DA1fBcaA1";
 // Mikhail public address 0x6CF3b3418241B621dD2c59d2f4058dEB78FF2054
 const latestAddress = "0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67";
