@@ -29,11 +29,12 @@ app.post("/api/callback", (req, res) => {
 
 // Latest contract address: 0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67
 const contractAddress = "0x51cFe6e6Bb7E7Be72503343aea7238aC6136EE67";
-app.post("/api/createPOM", () => {
+app.post("/api/createPOM", async (req,res) => {
     console.log('Creating POM');
-    addTokens(contractAddress, [ids]);
+    const tx = await addTokens(contractAddress, [ids]);
     ids += 1;
     //console.log(addtx.hash)
+    res.status(200).set('Content-Type', 'application/json').send(tx.hash);
 });
 
 app.post("/api/claimPOM", () => {
