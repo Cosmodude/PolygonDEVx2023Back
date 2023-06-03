@@ -11,7 +11,6 @@ app.use(cors());
 
 const port = 8080;
 
-
 // Create a map to store the auth requests and their session IDs
 const requestMap = new Map();
 let ids = 0;
